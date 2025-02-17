@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Minhas compras</title>
+</head>
+<body>
+    <h1>Minhas Compras</h1>
+    <ul>
+        {{#purchases}}
+        <li>
+            <strong>{{Ticket.name}}</strong> - Quantidade: {{quantity}}
+            <a href="/purchases/{{id}}">Ver detalhes</a>
+        </li>
+        {{/purchases}}
+    </ul>
+    <a href="/tickets">Comprar mais Ingressos</a>
+</body>
+</html>

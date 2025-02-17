@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Ingressos Disponíveis</title>
+</head>
+<body>
+    <nav>
+        <a href="/purchases">Minhas compras</a>
+        {{#isAdmin}}
+        <a href="/tickets/create">Criar Ingresso</a>
+        {{/isAdmin}}
+        <a href="/users/logout">Sair</a>
+    </nav>
+
+    <h1>Ingressos Disponíveis</h1>
+    <form id="purchaseForm" action="/purchases" method="post">
+        <ul>
+            {{#tickets}}
+            <li>
+                <strong>{{name}}</strong> - R${{price}}
+                <ul>
+                    {{#schedules}}
+                    <li>
+                        Horário: {{time}} - ({{quantity}} disponíveis)
+                        <label for="quantity-{{id}}">Quantidade para compra:</label>
+                        <input type="number" id="quantity-{{id}}" name="quantities[]" min="0" max="{{quantity}}" data-price="{{price}}">
+                        <input type="hidden" name="scheduleIds[]" value="{{id}}">
+                    </li>
+                    {{/schedules}}
+                </ul>
+                {{#isAdmin}}
+                    <a href="/tickets/edit/{{id}}">Editar</a>
+                    <a href="/tickets/delete/{{id}}">Deletar</a>
+                {{/isAdmin}}
+            </li>
+            {{/tickets}}
+        </ul>
+        <button type="button" onclick="confirmPurchase()">Comprar Ingressos Selecionados</button>
+    </form>
+
+    <script>
+        function confirmPurchase() {
+            // Seleciona todos os campos de quantidade
+            const quantityInputs = document.querySelectorAll('input[type="number"]');
+            let total = 0;
+
+            // Calcula o valor total da compra
+            quantityInputs.forEach(input => {
+                const quantity = parseInt(input.value);
+                const price = parseFloat(input.dataset.price);
+                if (quantity > 0) {
+                    total += quantity * price;
+                }
+            });
+
+            // Exibe o confirm com o valor total
+            if (total > 0) {
+                const confirmation = confirm(`O valor total da compra é R$${total.toFixed(2)}. Deseja confirmar a compra?`);
+                if (confirmation) {
+                    // Se o usuário confirmar, envia o formulário
+                    document.getElementById('purchaseForm').submit();
+                } else {
+                    // Se o usuário cancelar, não faz nada
+                    alert("Compra cancelada.");
+                }
+            } else {
+                alert("Selecione pelo menos um ingresso para comprar.");
+            }
+        }
+    </script>
+</body>
+</html>

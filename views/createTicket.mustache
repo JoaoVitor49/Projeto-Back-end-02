@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Criar Ingresso</title>
+</head>
+<body>
+    <h1>Crie um novo ingresso</h1>
+    <form action="/tickets" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required>
+        <br>
+        <label for="price">Preço:</label>
+        <input type="number" id="price" name="price" step="0.01" required>
+        <br>
+        <div id="schedules">
+            <div class="schedule">
+                <label for="time">Horário:</label>
+                <input type="time" name="times[]" required>
+                <label for="quantity">Quantidade:</label>
+                <input type="number" name="quantities[]" required>
+            </div>
+        </div>
+        <button type="button" onclick="addSchedule()">Adicionar Horário</button>
+        <br>
+        <button type="submit">Criar Ingresso</button>
+    </form>
+    <a href="/tickets">Voltar para home</a>
+</body>
+</html>
+
+<script>
+    function addSchedule() {
+        const schedulesDiv = document.getElementById('schedules');
+        const newSchedule = document.createElement('div');
+        newSchedule.className = 'schedule';
+        newSchedule.innerHTML = `
+            <label for="time">Horário:</label>
+            <input type="time" name="times[]" required>
+            <label for="quantity">Quantidade:</label>
+            <input type="number" name="quantities[]" required>
+        `;
+        schedulesDiv.appendChild(newSchedule);
+    }
+</script>

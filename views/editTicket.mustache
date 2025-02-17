@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Ingresso</title>
+</head>
+<body>
+    <h1>Edite o ingresso</h1>
+    <form action="/tickets/update/{{ticket.id}}" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" value="{{ticket.name}}" required>
+        <br>
+        <label for="price">Preço:</label>
+        <input type="number" id="price" name="price" step="0.01" value="{{ticket.price}}" required>
+        <br>
+        <div id="schedules">
+            {{#ticket.schedules}}
+            <div class="schedule">
+                <label for="time">Horário:</label>
+                <input type="time" name="times[]" value="{{time}}" required>
+                <label for="quantity">Quantidade:</label>
+                <input type="number" name="quantities[]" value="{{quantity}}" required>
+                <label>
+                    <input type="checkbox" name="deleteSchedules[]" value="{{id}}"> Remover este horário
+                </label>
+                <input type="hidden" name="scheduleIds[]" value="{{id}}">
+            </div>
+            {{/ticket.schedules}}
+        </div>
+        <button type="button" onclick="addSchedule()">Adicionar Horário</button>
+        <br>
+        <button type="submit">Atualizar Ingresso</button>
+    </form>
+    <a href="/tickets">Voltar para home</a>
+</body>
+</html>
+
+<script>
+    function addSchedule() {
+        const schedulesDiv = document.getElementById('schedules');
+        const newSchedule = document.createElement('div');
+        newSchedule.className = 'schedule';
+        newSchedule.innerHTML = `
+            <label for="time">Horário:</label>
+            <input type="time" name="times[]" required>
+            <label for="quantity">Quantidade:</label>
+            <input type="number" name="quantities[]" required>
+        `;
+        schedulesDiv.appendChild(newSchedule);
+    }
+</script>

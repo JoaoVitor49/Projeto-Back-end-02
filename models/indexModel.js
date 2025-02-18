@@ -20,6 +20,9 @@ Purchase.belongsTo(Ticket, { foreignKey: 'ticketId' })
 User.hasMany(Purchase, { foreignKey: 'userId' })
 Purchase.belongsTo(User, { foreignKey: 'userId' })
 
+Schedule.hasMany(Purchase, { foreignKey: 'scheduleId'})
+Purchase.belongsTo(Schedule, { foreignKey: 'scheduleId'})
+
 module.exports = {
     User,
     Ticket,

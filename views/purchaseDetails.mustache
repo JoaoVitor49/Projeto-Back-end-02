@@ -2,12 +2,20 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Detalhes da compra</title>
+    <title>Detalhes do Pedido</title>
 </head>
 <body>
-    <h1>Detalhe da compra</h1>
-    <p><strong>Ingresso:</strong> {{purchase.Ticket.name}}</p>
-    <p><strong>Quantidade:</strong> {{purchase.quantity}}</p>
-    <a href="/purchases">Voltar para as compras</a>
+    <h1>Detalhe do Pedido</h1>
+    <ul>
+        {{#purchases}}
+        <li>
+            <strong>Ingresso:</strong> {{Ticket.name}}<br>
+            <strong>Horário:</strong> {{Schedule.time}}<br>
+            <strong>Quantidade:</strong> {{quantity}}<br>
+            <strong>Total:</strong> R${{total}}<br>
+        </li>
+        {{/purchases}}
+    </ul>
+    <a href="/purchases">Voltar para as minhas compras</a>
 </body>
 </html>

@@ -24,6 +24,10 @@ module.exports = (sequelize, DataTypes) => {
         total: {
             type: DataTypes.DECIMAL(10, 2),
             allowNull: false
+        },
+        sessionId: {
+            type: DataTypes.STRING,
+            allowNull: false
         }
     });
 

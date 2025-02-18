@@ -66,18 +66,3 @@ exports.processPurchase = async (req, res) => {
         res.status(500).send('Erro ao processar a compra: ' + error.message)
     }
 }
-
-exports.cancelPurchase = async (req, res) => {
-    const { id } = req.params;
-    try {
-        const purchase = await Purchase.findByPk(id);
-        if (!purchase || purchase.status === 'cancelled') {
-            return res.status(400).send('Purchase cannot be cancelled.');
-        }
-        purchase.status = 'cancelled';
-        await purchase.save();
-        res.redirect('/purchases');
-    } catch (error) {
-        res.status(500).send('Error cancelling purchase');
-    }
-};
